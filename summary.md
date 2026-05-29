@@ -17,7 +17,8 @@ A standalone, self-checking AXI-level testbench for the `ecc` top-level entity. 
 - nn = 21 (set dynamically at runtime via `W_PRIME_SIZE`) — keeps simulation fast (seconds vs. minutes for P-256)
 - Blinding disabled at runtime (`W_BLINDING = 0`) — avoids waiting for TRNG entropy
 - ASIC techno-specific components (same as existing `sim/Makefile`)
-- hwsecure = TRUE, shuffle = FALSE (in `ecc_customize.vhd` as left after debugging)
+- hwsecure = TRUE, shuffle = TRUE (production defaults in `ecc_customize.vhd`)
+- Simulator: `ghdl-llvm`, VHDL standard: `--std=93c -fsynopsys`
 
 **Test cases (all passing):**
 | # | Operation | Description |
@@ -55,16 +56,22 @@ The existing `sim/ecc_tb_pkg.vhd` writes `ptdbl`/`ptneg` input to R1, which sile
 
 ## Tools
 
-- `ghdl` (GCC backend, v5.0.1) — `ghdl-llvm` is **not** installed
+- `ghdl-llvm` (LLVM backend, v5.0.1) — installed during session; preferred over `ghdl-gcc`
+- Supported VHDL standards: `87, 93, 02, 08, 19`. The upstream HDL requires `--std=93c` due to VHDL-93 textio constructs incompatible with `--std=08`.
 - `python3` 3.13.7
 - `make` 4.4.1
+
+## Repository
+
+- Upstream: `origin` → `github.com/ANSSI-FR/IPECC`
+- This fork: `myfork` → `github.com/MarkZwolinski/IPECC-Claude-Verification`
 
 ## Files Modified / Created
 
 | File | Change |
 |------|--------|
 | `CLAUDE.md` | Created — codebase guide |
-| `tb/Makefile` | Created — build/run testbench |
-| `tb/tb_ecc.vhd` | Created — standalone testbench |
-| `hdl/common/ecc_customize.vhd` | `shuffle` set to `FALSE` (left from debugging; safe to restore to `TRUE`) |
-| `prompts.md` | Running log of user prompts |
+| `tb/Makefile` | Created — build/run testbench; uses `ghdl-llvm --std=93c` |
+| `tb/tb_ecc.vhd` | Created — standalone testbench (9 tests, all passing) |
+| `prompts.md` | Running log of all user prompts |
+| `summary.md` | This file |
