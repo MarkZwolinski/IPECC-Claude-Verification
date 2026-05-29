@@ -2,7 +2,7 @@
 # IPECC standalone AXI testbench
 ##############################################
 
-GHDL     := ghdl
+GHDL     := ghdl-llvm
 GHDLFLAGS := --std=93c -fsynopsys --warn-no-hide --workdir=work
 
 IRAM_DIR := ../hdl/common/ecc_curve_iram
