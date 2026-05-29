@@ -37,3 +37,15 @@ commit
 push
 
 update prompts.md including all sessions
+
+commit and push
+
+update summary.md
+
+run the tests
+
+commit and push
+
+add tb/work/ and tb/tb_ecc to .gitignore
+
+update prompts.md
